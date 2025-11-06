@@ -1,0 +1,38 @@
+//Problem 398: rotate the values on the border of the matrix clockwise.
+std::vector<double> rotate_border_clockwise(const std::vector<std::vector<double>>& matrix) {
+	if (matrix.empty() || matrix[0].empty()) {
+		return {};
+	}
+	int rows = matrix.size();
+	int cols = matrix[0].size();
+	vector<double> border_elements;
+	// Top row
+	for (int j = 0; j < cols; ++j) {
+		border_elements.push_back(matrix[0][j]);
+	}
+	// Right column
+	for (int i = 1; i < rows; ++i) {
+		border_elements.push_back(matrix[i][cols - 1]);
+	}
+	// Bottom row
+	if (rows > 1) {
+		for (int j = cols - 2; j >= 0; --j) {
+			border_elements.push_back(matrix[rows - 1][j]);
+		}
+	}
+	// Left column
+	if (cols > 1) {
+		for (int i = rows - 2; i > 0; --i) {
+			border_elements.push_back(matrix[i][0]);
+		}
+	}
+	// Rotate the border elements clockwise
+	if (!border_elements.empty()) {
+		double last_element = border_elements.back();
+		for (int i = border_elements.size() - 1; i > 0; --i) {
+			border_elements[i] = border_elements[i - 1];
+		}
+		border_elements[0] = last_element;
+	}
+	return border_elements;
+}
